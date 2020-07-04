@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row mt-3 mb-3">
         <div class="col-md-3">
-            <h2>Users</h2>
+            <h2>Produk</h2>
         </div>
         <div class="col-md-7"></div>
         <div class="col-md-2">
@@ -15,10 +15,10 @@
         <thead>
             <tr>
                 <th width="5%">#</th>
-                <th width="20%">Nama User</th>
-                <th width="15%">Email</th>
-                <th width="15%">No Hp</th>
-                <th width="20%">Level</th>
+                <th width="10%">Kode</th>
+                <th width="25%">Nama Produk</th>
+                <th width="15%">Harga</th>
+                <th width="10%">Stok</th>
                 <th width="5%"></th>
                 <th width="5%"></th>
             </tr>
@@ -35,7 +35,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Form Users</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Form Produk</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,43 +49,27 @@
                         <div id="pesanForm"></div>
                     </div>
                     <div class="form-group">
-                        <label>Kode Pelanggan</label>
-                        <input type="text" class="form-control" id="kode_user" name="kode_user" value="<?php echo $kode; ?>" readonly>
+                        <label>Kode Produk</label>
+                        <input type="text" class="form-control" id="kode_produk" name="kode_produk" value="<?php echo $kode; ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap">
+                        <label>Nama Produk</label>
+                        <input type="text" class="form-control" id="nama_produk" name="nama_produk" placeholder="Nama Produk">
                     </div>
                     <div class="form-group">
-                        <label>No HP/WA</label>
-                        <input type="text" class="form-control" id="noHp" name="noHp" placeholder="+62 XXXX">
+                        <label>Harga</label>
+                        <input type="text" class="form-control" id="harga_produk" name="harga_produk" placeholder="Hanya Angka: 10000">
                     </div>
                     <div class="form-group">
-                        <label>Alamat</label>
-                        <textarea name="alamat" id="alamat" rows="5" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email">
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="password" class="form-control" name="password">
-                        <input type="hidden" id="passwordOld" class="form-control" name="passwordOld">
+                        <label>Deskripsi Produk</label>
+                        <textarea name="deskripsi_produk" id="deskripsi_produk" rows="5" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Level</label>
-                        <select name="level" id="level" class="form-control">
-                            <option value=""></option>
-                            <option value="1">Super Admin</option>
-                            <option value="2">Customer</option>
-                        </select>
+                        <label>Stok</label>
+                        <input type="text" class="form-control" id="stok_produk" name="stok_produk" placeholder="Hanya Angka : 1000">
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -102,7 +86,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Produk</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -113,7 +97,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="userId" class="userID">
+                    <input type="hidden" name="userId" class="produkID">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="button" class="btn btn-primary" id="formDeleteBtn">Yes</button>
                 </div>
@@ -145,24 +129,19 @@
             $('#method').val("PUT");
 
             // get data from button edit
-            const id = $(this).data('id');
-            const noHp = $(this).data('nohp');
-            const alamat = $(this).data('alamat');
-            const username = $(this).data('username');
-            const nama = $(this).data('nama');
-            const email = $(this).data('email');
-            const level = $(this).data('level');
-            const password = $(this).data('ps');
+            const kode_produk = $(this).data('kode_produk');
+            const nama_produk = $(this).data('nama_produk');
+            const deskripsi_produk = $(this).data('deskripsi_produk');
+            const harga_produk = $(this).data('harga_produk');
+            const stok_produk = $(this).data('stok_produk');
             // console.log(nama);
             // Set data to Form Edit
-            $('#kode_user').val(id);
-            $('#noHp').val(noHp);
-            $('#username').val(username);
-            $('#alamat').val(alamat);
-            $('#nama_lengkap').val(nama);
-            $('#email').val(email);
-            $('#level').val(level).trigger('change');
-            $('#passwordOld').val(password);
+            $('#kode_produk').val(kode_produk);
+            $('#harga_produk').val(harga_produk);
+            $('#stok_produk').val(stok_produk);
+            $('#deskripsi_produk').val(deskripsi_produk);
+            $('#nama_produk').val(nama_produk);
+
             // Call Modal Edit
             $('#addModal').modal('show');
         });
@@ -173,7 +152,7 @@
         // get data from button edit
         const id = $(this).data('id');
         // Set data to Form Edit
-        $('.userID').val(id);
+        $('.produkID').val(id);
         // Call Modal Edit
         $('#deleteModal').modal('show');
     });
@@ -181,10 +160,10 @@
     // delete action
     $("#formDeleteBtn").on('click', function(event) {
 
-        id = $('.userID').val();
+        id = $('.produkID').val();
 
         $.ajax({
-            url: "<?php echo site_url("rest/users/delete"); ?>/" + id,
+            url: "<?php echo site_url("rest/produk/delete"); ?>/" + id,
             method: "DELETE",
             beforeSend: function() {
                 $('#responseDelete').html("Loading...");
@@ -206,25 +185,24 @@
 
     function loadTable() {
         $.ajax({
-            url: "<?php echo site_url("rest/users/data"); ?>",
+            url: "<?php echo site_url("rest/produk/data"); ?>",
             method: "GET",
             beforeSend: function() {
                 $('#response').html(loadResponse);
             },
             success: function(data) {
                 var row = '<tr>';
-                console.log(data.data[0]);
+                // console.log(data.data[0]);
                 $.each(data.data, function(index) {
                     no = index + 1;
 
-                    alamat = data.data[index].alamat;
-                    nama_lengkap = data.data[index].nama_lengkap;
-                    noHp = data.data[index].noHp;
-                    level = data.data[index].level == 1 ? "Super Admin" : "Admin";
-                    email = data.data[index].email;
-                    id = data.data[index].kode_user;
+                    kode_produk = data.data[index].kode_produk;
+                    nama_produk = data.data[index].nama_produk;
+                    deskripsi_produk = data.data[index].deskripsi_produk;
+                    harga_produk = data.data[index].harga_produk;
+                    stok_produk = data.data[index].stok_produk;
 
-                    row += '<tr><td>' + no + '</td><td>' + nama_lengkap + '</td><td>' + email + '</td><td>' + noHp + '</td><td>' + level + '</td><td><a href="#" title="Edit Data" class="btn btn-warning btn-sm btn-edit"  data-alamat="' + alamat + '" data-nama="' + nama_lengkap + '" data-id="' + id + '" data-email="' + email + '" data-nohp="' + noHp + '" data-level="' + data.data[index].level + '" data-username="' + data.data[index].username + '" data-ps="' + data.data[index].password + '" ><i class="fa  fa-pencil-square-o"></i> </a></td><td><a title="Hapus Data" class="btn btn-danger btn-sm btn-delete" data-id ="' + id + '" href="#"><i class="fa  fa-trash"></i> </a></td></tr>';
+                    row += '<tr><td>' + no + '</td><td>' + kode_produk + '</td><td>' + nama_produk + '</td><td>' + harga_produk + '</td><td>' + stok_produk + '</td><td><a href="#" title="Edit Data" class="btn btn-warning btn-sm btn-edit"  data-kode_produk="' + kode_produk + '" data-nama_produk="' + nama_produk + '" data-deskripsi_produk="' + deskripsi_produk + '" data-harga_produk="' + harga_produk + '" data-stok_produk="' + stok_produk + '" ><i class="fa  fa-pencil-square-o"></i> </a></td><td><a title="Hapus Data" class="btn btn-danger btn-sm btn-delete" data-id ="' + kode_produk + '" href="#"><i class="fa  fa-trash"></i> </a></td></tr>';
                 });
                 setTimeout(function() {
                     $('#response').html(row + '</tr>');
@@ -239,39 +217,32 @@
     $("#tombol-simpan").click(function(event) {
 
         var method = $('#method').val();
-        var kode_userTxt = $('#kode_user').val();
-        var nama_lengkapTxt = $('#nama_lengkap').val();
-        var noHpTxt = $('#noHp').val();
-        var alamatTxt = $('#alamat').val();
-        var emailTxt = $('#email').val();
-        var usernameTxt = $('#username').val();
-        var passwordTxt = $('#password').val();
-        var levelTxt = $('#level').val();
+        var kode_produkTxt = $('#kode_produk').val();
+        var nama_produkTxt = $('#nama_produk').val();
+        var harga_produkTxt = $('#harga_produk').val();
+        var deskripsi_produkTxt = $('#deskripsi_produk').val();
+        var stok_produkTxt = $('#stok_produk').val();
+
         msgSave = '';
         if (method == "POST") {
             msgSave = "Simpan";
-            APP_URL = "<?php echo site_url("rest/users/create"); ?>";
+            APP_URL = "<?php echo site_url("rest/produk/create"); ?>";
         } else {
             msgSave = "Ubah";
-            APP_URL = "<?php echo site_url("rest/users/update"); ?>";
+            APP_URL = "<?php echo site_url("rest/produk/update"); ?>";
         }
 
-        if (passwordTxt == null || passwordTxt == '') {
-            passwordTxt = $('#passwordOld').val();
-        }
+
         $.ajax({
             url: APP_URL,
             method: "POST",
             dataType: 'JSON',
             data: {
-                kode_user: kode_userTxt,
-                nama_lengkap: nama_lengkapTxt,
-                noHp: noHpTxt,
-                alamat: alamatTxt,
-                email: emailTxt,
-                username: usernameTxt,
-                password: passwordTxt,
-                level: levelTxt
+                kode_produk: kode_produkTxt,
+                nama_produk: nama_produkTxt,
+                harga_produk: harga_produkTxt,
+                deskripsi_produk: deskripsi_produkTxt,
+                stok_produk: stok_produkTxt,
             },
             beforeSend: function() {
                 $('#tombol-simpan').prop('disabled', true);
@@ -300,32 +271,21 @@
 
                 } else {
 
-                    if (data.data.nama_lengkap != undefined) {
-                        pesan = data.data.nama_lengkap;
-                        $("#nama_lengkap").focus();
-                    } else if (data.data.noHp != undefined) {
-                        pesan = data.data.noHp;
-                        $("#noHp").focus();
+                    if (data.data.nama_produk != undefined) {
+                        pesan = data.data.nama_produk;
+                        $("#nama_produk").focus();
+                    } else if (data.data.harga_produk != undefined) {
+                        pesan = data.data.harga_produk;
+                        $("#harga_produk").focus();
 
-                    } else if (data.data.alamat != undefined) {
-                        pesan = data.data.alamat;
-                        $("#alamat").focus();
+                    } else if (data.data.deskripsi_produk != undefined) {
+                        pesan = data.data.deskripsi_produk;
+                        $("#deskripsi_produk").focus();
 
-                    } else if (data.data.email != undefined) {
-                        pesan = data.data.email;
-                        $("#email").focus();
+                    } else if (data.data.stok_produk != undefined) {
+                        pesan = data.data.stok_produk;
+                        $("#stok_produk").focus();
 
-                    } else if (data.data.username != undefined) {
-                        pesan = data.data.username;
-                        $("#username").focus();
-
-                    } else if (data.data.password != undefined) {
-                        pesan = data.data.password;
-                        $("#password").focus();
-
-                    } else if (data.data.level != undefined) {
-                        pesan = data.data.level;
-                        $("#level").focus();
                     }
                     $('#alert').css('display', 'block');
                     $('#pesanForm').html(pesan);
@@ -338,14 +298,10 @@
     });
 
     function clearForm() {
-        $('#nama_lengkap').val("");
-        $('#username').val("");
-        $('#noHp').val("");
-        $('#alamat').val("");
-        $('#nama_lengkap').val("");
-        $('#email').val("");
-        $('#level').val("");
-        $('#password').val("");
+        $('#nama_produk').val("");
+        $('#stok_produk').val("");
+        $('#harga_produk').val("");
+        $('#deskripsi_produk').val("");
     }
 </script>
 <?= $this->endSection() ?>

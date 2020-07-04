@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row mt-3 mb-3">
         <div class="col-md-3">
-            <h2>Users</h2>
+            <h2>Transaks</h2>
         </div>
         <div class="col-md-7"></div>
         <div class="col-md-2">
@@ -15,10 +15,9 @@
         <thead>
             <tr>
                 <th width="5%">#</th>
-                <th width="20%">Nama User</th>
-                <th width="15%">Email</th>
-                <th width="15%">No Hp</th>
-                <th width="20%">Level</th>
+                <th width="15%">Kode</th>
+                <th width="25%">Nama Hadiah</th>
+                <th width="15%">Poin</th>
                 <th width="5%"></th>
                 <th width="5%"></th>
             </tr>
@@ -30,12 +29,11 @@
 <!-- Modal Add Product-->
 <form class="form_input">
     <input type="hidden" name="method" id="method" value="POST">
-    <input type="hidden" name="idUser" id="idUser">
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Form Users</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Form Hadiah</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,43 +47,18 @@
                         <div id="pesanForm"></div>
                     </div>
                     <div class="form-group">
-                        <label>Kode Pelanggan</label>
-                        <input type="text" class="form-control" id="kode_user" name="kode_user" value="<?php echo $kode; ?>" readonly>
+                        <label>Kode Hadiah</label>
+                        <input type="text" class="form-control" id="kode_hadiah" name="kode_hadiah" value="<?php echo $kodeHadiah; ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap">
+                        <label>Nama Hadiah</label>
+                        <input type="text" class="form-control" id="nama_hadiah" name="nama_hadiah" placeholder="Nama Hadiah">
                     </div>
                     <div class="form-group">
-                        <label>No HP/WA</label>
-                        <input type="text" class="form-control" id="noHp" name="noHp" placeholder="+62 XXXX">
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat</label>
-                        <textarea name="alamat" id="alamat" rows="5" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email">
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="password" class="form-control" name="password">
-                        <input type="hidden" id="passwordOld" class="form-control" name="passwordOld">
+                        <label>Poin</label>
+                        <input type="text" class="form-control" id="poin" name="poin" placeholder="Hanya Angka: 5">
                     </div>
 
-                    <div class="form-group">
-                        <label>Level</label>
-                        <select name="level" id="level" class="form-control">
-                            <option value=""></option>
-                            <option value="1">Super Admin</option>
-                            <option value="2">Customer</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -102,7 +75,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Hadiah</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -113,7 +86,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="userId" class="userID">
+                    <input type="hidden" name="userId" class="hadiahID">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="button" class="btn btn-primary" id="formDeleteBtn">Yes</button>
                 </div>
@@ -130,14 +103,13 @@
 <script src="<?php echo base_url() ?>/vendors/bootstrap-sweetalert/sweetalert.min2.js"></script>
 
 <script>
-    var loadResponse = '<tr><td colspan="6" class="text-center">Loading Response...<td></tr>';
+    var loadResponse = '<tr><td colspan="5" class="text-center">Loading Response...<td></tr>';
     $(document).ready(function() {
         loadTable();
 
         $('#btn-tambah').click(function() {
             clearForm();
             $('#method').val("POST");
-
         })
 
         $(document).on("click", ".btn-edit", function() {
@@ -145,24 +117,15 @@
             $('#method').val("PUT");
 
             // get data from button edit
-            const id = $(this).data('id');
-            const noHp = $(this).data('nohp');
-            const alamat = $(this).data('alamat');
-            const username = $(this).data('username');
-            const nama = $(this).data('nama');
-            const email = $(this).data('email');
-            const level = $(this).data('level');
-            const password = $(this).data('ps');
+            const kode_hadiah = $(this).data('kode_hadiah');
+            const nama_hadiah = $(this).data('nama_hadiah');
+            const poin = $(this).data('poin');
             // console.log(nama);
             // Set data to Form Edit
-            $('#kode_user').val(id);
-            $('#noHp').val(noHp);
-            $('#username').val(username);
-            $('#alamat').val(alamat);
-            $('#nama_lengkap').val(nama);
-            $('#email').val(email);
-            $('#level').val(level).trigger('change');
-            $('#passwordOld').val(password);
+            $('#kode_hadiah').val(kode_hadiah);
+            $('#poin').val(poin);
+            $('#nama_hadiah').val(nama_hadiah);
+
             // Call Modal Edit
             $('#addModal').modal('show');
         });
@@ -173,7 +136,7 @@
         // get data from button edit
         const id = $(this).data('id');
         // Set data to Form Edit
-        $('.userID').val(id);
+        $('.hadiahID').val(id);
         // Call Modal Edit
         $('#deleteModal').modal('show');
     });
@@ -181,10 +144,10 @@
     // delete action
     $("#formDeleteBtn").on('click', function(event) {
 
-        id = $('.userID').val();
+        id = $('.hadiahID').val();
 
         $.ajax({
-            url: "<?php echo site_url("rest/users/delete"); ?>/" + id,
+            url: "<?php echo site_url("rest/hadiah/delete"); ?>/" + id,
             method: "DELETE",
             beforeSend: function() {
                 $('#responseDelete').html("Loading...");
@@ -206,25 +169,22 @@
 
     function loadTable() {
         $.ajax({
-            url: "<?php echo site_url("rest/users/data"); ?>",
+            url: "<?php echo site_url("rest/hadiah/data"); ?>",
             method: "GET",
             beforeSend: function() {
                 $('#response').html(loadResponse);
             },
             success: function(data) {
                 var row = '<tr>';
-                console.log(data.data[0]);
+                // console.log(data.data[0]);
                 $.each(data.data, function(index) {
                     no = index + 1;
 
-                    alamat = data.data[index].alamat;
-                    nama_lengkap = data.data[index].nama_lengkap;
-                    noHp = data.data[index].noHp;
-                    level = data.data[index].level == 1 ? "Super Admin" : "Admin";
-                    email = data.data[index].email;
-                    id = data.data[index].kode_user;
+                    kode_hadiah = data.data[index].kode_hadiah;
+                    nama_hadiah = data.data[index].nama_hadiah;
+                    poin = data.data[index].poin;
 
-                    row += '<tr><td>' + no + '</td><td>' + nama_lengkap + '</td><td>' + email + '</td><td>' + noHp + '</td><td>' + level + '</td><td><a href="#" title="Edit Data" class="btn btn-warning btn-sm btn-edit"  data-alamat="' + alamat + '" data-nama="' + nama_lengkap + '" data-id="' + id + '" data-email="' + email + '" data-nohp="' + noHp + '" data-level="' + data.data[index].level + '" data-username="' + data.data[index].username + '" data-ps="' + data.data[index].password + '" ><i class="fa  fa-pencil-square-o"></i> </a></td><td><a title="Hapus Data" class="btn btn-danger btn-sm btn-delete" data-id ="' + id + '" href="#"><i class="fa  fa-trash"></i> </a></td></tr>';
+                    row += '<tr><td>' + no + '</td><td>' + kode_hadiah + '</td><td>' + nama_hadiah + '</td><td>' + poin + '</td><td><a href="#" title="Edit Data" class="btn btn-warning btn-sm btn-edit"  data-kode_hadiah="' + kode_hadiah + '" data-nama_hadiah="' + nama_hadiah + '"  data-poin="' + poin + '"  ><i class="fa  fa-pencil-square-o"></i> </a></td><td><a title="Hapus Data" class="btn btn-danger btn-sm btn-delete" data-id ="' + kode_hadiah + '" href="#"><i class="fa  fa-trash"></i> </a></td></tr>';
                 });
                 setTimeout(function() {
                     $('#response').html(row + '</tr>');
@@ -239,39 +199,28 @@
     $("#tombol-simpan").click(function(event) {
 
         var method = $('#method').val();
-        var kode_userTxt = $('#kode_user').val();
-        var nama_lengkapTxt = $('#nama_lengkap').val();
-        var noHpTxt = $('#noHp').val();
-        var alamatTxt = $('#alamat').val();
-        var emailTxt = $('#email').val();
-        var usernameTxt = $('#username').val();
-        var passwordTxt = $('#password').val();
-        var levelTxt = $('#level').val();
+        var kode_hadiahTxt = $('#kode_hadiah').val();
+        var nama_hadiahTxt = $('#nama_hadiah').val();
+        var poinTxt = $('#poin').val();
+
         msgSave = '';
         if (method == "POST") {
             msgSave = "Simpan";
-            APP_URL = "<?php echo site_url("rest/users/create"); ?>";
+            APP_URL = "<?php echo site_url("rest/hadiah/create"); ?>";
         } else {
             msgSave = "Ubah";
-            APP_URL = "<?php echo site_url("rest/users/update"); ?>";
+            APP_URL = "<?php echo site_url("rest/hadiah/update"); ?>";
         }
 
-        if (passwordTxt == null || passwordTxt == '') {
-            passwordTxt = $('#passwordOld').val();
-        }
+
         $.ajax({
             url: APP_URL,
             method: "POST",
             dataType: 'JSON',
             data: {
-                kode_user: kode_userTxt,
-                nama_lengkap: nama_lengkapTxt,
-                noHp: noHpTxt,
-                alamat: alamatTxt,
-                email: emailTxt,
-                username: usernameTxt,
-                password: passwordTxt,
-                level: levelTxt
+                kode_hadiah: kode_hadiahTxt,
+                nama_hadiah: nama_hadiahTxt,
+                poin: poinTxt
             },
             beforeSend: function() {
                 $('#tombol-simpan').prop('disabled', true);
@@ -295,37 +244,17 @@
                     });
                     loadTable();
                     $('.modal').modal('hide');
-                    $('#pesanForm').html(pesan);
 
 
                 } else {
 
-                    if (data.data.nama_lengkap != undefined) {
-                        pesan = data.data.nama_lengkap;
-                        $("#nama_lengkap").focus();
-                    } else if (data.data.noHp != undefined) {
-                        pesan = data.data.noHp;
-                        $("#noHp").focus();
+                    if (data.data.nama_hadiah != undefined) {
+                        pesan = data.data.nama_hadiah;
+                        $("#nama_hadiah").focus();
+                    } else if (data.data.poin != undefined) {
+                        pesan = data.data.poin;
+                        $("#poin").focus();
 
-                    } else if (data.data.alamat != undefined) {
-                        pesan = data.data.alamat;
-                        $("#alamat").focus();
-
-                    } else if (data.data.email != undefined) {
-                        pesan = data.data.email;
-                        $("#email").focus();
-
-                    } else if (data.data.username != undefined) {
-                        pesan = data.data.username;
-                        $("#username").focus();
-
-                    } else if (data.data.password != undefined) {
-                        pesan = data.data.password;
-                        $("#password").focus();
-
-                    } else if (data.data.level != undefined) {
-                        pesan = data.data.level;
-                        $("#level").focus();
                     }
                     $('#alert').css('display', 'block');
                     $('#pesanForm').html(pesan);
@@ -338,14 +267,9 @@
     });
 
     function clearForm() {
-        $('#nama_lengkap').val("");
-        $('#username').val("");
-        $('#noHp').val("");
-        $('#alamat').val("");
-        $('#nama_lengkap').val("");
-        $('#email').val("");
-        $('#level').val("");
-        $('#password').val("");
+        $('#nama_hadiah').val("");
+        $('#stok_hadiah').val("");
+        $('#poin').val("");
     }
 </script>
 <?= $this->endSection() ?>

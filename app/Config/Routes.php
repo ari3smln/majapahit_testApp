@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('Login');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -41,20 +41,47 @@ $routes->get('/logout', 'Login::logout');
 $routes->group('panel', function ($routes) {
 	$routes->get('beranda', 'Panel\Beranda::index');
 
-	$routes->get('users', 'Panel\Users::index');
+
 	$routes->group('users', function ($routes) {
+		$routes->get('index', 				'Panel\Users::index');
 		$routes->get('(:segment)/edit', 	'Panel\Users::show');
 		$routes->delete('(:segment)', 		'Panel\Users::delete/$1');
+	});
+
+	$routes->group('produk', function ($routes) {
+		$routes->get('index', 				'Panel\Produk::index');
+	});
+
+	$routes->group('hadiah', function ($routes) {
+		$routes->get('index', 		'Panel\Hadiah::index');
+	});
+
+	$routes->group('transaksi', function ($routes) {
+		$routes->get('index', 		'Panel\Transaksi::index');
 	});
 });
 
 
 $routes->group('rest', function ($routes) {
 	$routes->group('users', function ($routes) {
-		$routes->get('data', 				'Rest::users');
-		$routes->post('create',				'Rest::userCreate');
-		$routes->post('update/(:segment)',	'Rest::userUpdate/$1');
-		$routes->delete('delete/(:segment)',	'Rest::userDell/$1');
+		$routes->get('data', 					'RestUser::index');
+		$routes->post('create',					'RestUser::userCreate');
+		$routes->post('update',					'RestUser::userUpdate');
+		$routes->delete('delete/(:segment)',	'RestUser::userDell/$1');
+	});
+
+	$routes->group('produk', function ($routes) {
+		$routes->get('data', 					'RestProduk::index');
+		$routes->post('create',					'RestProduk::produkCreate');
+		$routes->post('update',					'RestProduk::produkUpdate');
+		$routes->delete('delete/(:segment)',	'RestProduk::produkDell/$1');
+	});
+
+	$routes->group('hadiah', function ($routes) {
+		$routes->get('data', 					'RestHadiah::index');
+		$routes->post('create',					'RestHadiah::hadiahCreate');
+		$routes->post('update',					'RestHadiah::hadiahUpdate');
+		$routes->delete('delete/(:segment)',	'RestHadiah::hadiahDell/$1');
 	});
 });
 

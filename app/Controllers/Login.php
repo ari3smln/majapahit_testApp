@@ -35,24 +35,23 @@ class Login extends BaseController
         // $cek = $this->LoginModel->cek_login($username, $password);
         $cek_login = $this->LoginModel->cek_login($username);
 
+        if ($cek_login != NULL) {
+            if (password_verify($password, $cek_login['password'])) {
+                $sess_array = array(
+                    'nama_lengkap' => $cek_login["nama_lengkap"],
+                    'username' => $cek_login["username"],
+                    'level' => $cek_login["level"],
+                );
+                session()->set($sess_array);
 
-        if (password_verify($password, $cek_login['password'])) {
-
-            // buat session
-            // session()->set('username', $cek_login['username']);
-            // session()->set('nama_user', $cek_login['nama_user']);
-            // session()->set('level', $cek_login['level']);
-            $sess_array = array(
-                'nama_user' => $cek_login["nama_user"],
-                'username' => $cek_login["username"],
-                'level' => $cek_login["level"],
-            );
-            session()->set($sess_array);
-
-            // die();
-            return redirect()->to(base_url('panel/beranda'));
+                // die();
+                return redirect()->to(base_url('panel/beranda'));
+            } else {
+                session()->setFlashdata('gagalLogin', 'Maaf Username & Password salah');
+                return redirect()->to(base_url('login'));
+            }
         } else {
-            session()->setFlashdata('gagalLogin', 'Masukkan Username & Password yang benar');
+            session()->setFlashdata('gagalLogin', 'Maaf Username Salah !!!');
             return redirect()->to(base_url('login'));
         }
     }

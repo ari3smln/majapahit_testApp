@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Tenda Promosi Jogja</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <title>Login | Majapahit </title>
+    <link href="vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="assets/css/styleLogin.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.css">
 </head>
@@ -16,7 +16,7 @@
             <div class="card-header mx-auto bg-dark">
 
                 <span><i class="text-warning fa fa-lock fa-4x w-75"></i></span><br>
-                <span class="logo_title mt-5"> <span>Panel</span> Tenda Promosi Jogja </span>
+                <span class="logo_title mt-5"> <span>Panel</span> Majapahit </span>
             </div>
             <div class="card-body">
                 <?php echo form_open('login', array('class' => 'form')) ?>
@@ -41,7 +41,7 @@
             </div>
             <?php if (!empty(session()->getFlashdata('gagalLogin'))) { ?>
                 <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-                    <strong>Login Gagal !!!</strong><br> <?php echo session()->getFlashdata('gagalLogin') ?>.
+                    <strong>Verifikasi Keamanan !!!</strong><br> <?php echo session()->getFlashdata('gagalLogin') ?>.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,8 +49,8 @@
             <?php } ?>
         </div>
     </div>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendors/jquery/jquery.min.js"></script>
+    <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {

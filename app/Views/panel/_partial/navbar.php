@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
-    <button class="btn btn-primary" id="menu-toggle"><i class="fa fa-caret-left"></i> Tenda Promosi Jogja</button>
+    <button class="btn btn-primary" id="menu-toggle"><i class="fa fa-bars"></i> App</button>
 
     <a href="<?php echo base_url('logout') ?>" class="btn btn-danger  float-right  ml-2 "><i class="fa fa-power-off"></i></a>
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

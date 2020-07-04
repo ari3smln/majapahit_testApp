@@ -36,16 +36,46 @@ class Validation
 	// Rules
 	//--------------------------------------------------------------------
 	public $user = [
-		'nama_user'   	=> 'required',
+		'nama_lengkap'  => 'required',
+		'noHp'   		=> 'required',
+		'alamat'   		=> 'required',
+		'email'   		=> 'required',
 		'username'   	=> 'required',
 		'level'   		=> 'required',
 		'password'   	=> 'required'
 	];
 
 	public $user_errors = [
-		'nama_user'   	=> ['required'  => 'Nama Lengkap wajib diisi.'],
+		'nama_lengkap'  => ['required'  => 'Nama Lengkap wajib diisi.'],
+		'noHp'  		=> ['required'  => 'No Hp wajib diisi.'],
+		'alamat'  		=> ['required'  => 'Alamat wajib diisi.'],
+		'email'  		=> ['required'  => 'Email wajib diisi.'],
 		'username'   	=> ['required'  => 'Username wajib diisi.'],
 		'level'   		=> ['required'  => 'Level wajib diisi.'],
 		'password'   	=> ['required'  => 'Password wajib diisi.']
+	];
+
+	public $produk = [
+		'nama_produk'  			=> 'required',
+		'deskripsi_produk'   	=> 'required',
+		'harga_produk'   		=> 'required',
+		'stok_produk'   		=> 'required'
+	];
+
+	public $produk_errors = [
+		'nama_produk' 		 	=> ['required'  => 'Nama produk wajib diisi.'],
+		'deskripsi_produk'  	=> ['required'  => 'deskripsi produk wajib diisi.'],
+		'harga_produk'  		=> ['required'  => 'harga produk wajib diisi.'],
+		'stok_produk'  			=> ['required'  => 'stok produk wajib diisi.']
+	];
+
+	public $hadiah = [
+		'nama_hadiah'  		=> 'required',
+		'poin'   			=> 'required'
+	];
+
+	public $hadiah_errors = [
+		'nama_hadiah' 		 	=> ['required'  => 'Nama Hadiah wajib diisi.'],
+		'poin'  				=> ['required'  => 'poin wajib diisi.']
 	];
 }

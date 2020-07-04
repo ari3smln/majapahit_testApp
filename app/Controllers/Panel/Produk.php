@@ -4,9 +4,9 @@ namespace App\Controllers\Panel;
 
 use CodeIgniter\Controller;
 use App\Controllers\BaseController;
-use App\Models\UserModel;
+use App\Models\ProdukModel;
 
-class Users extends BaseController
+class Produk extends BaseController
 {
     public function __construct()
     {
@@ -14,15 +14,15 @@ class Users extends BaseController
             session()->setFlashdata('gagalLogin', 'Anda Belum Login !!!');
             return redirect()->to(base_url('login'));
         }
-        $this->userModel = new UserModel();
+        $this->produkModel = new ProdukModel();
     }
     public function index()
     {
-        $data = $this->userModel->getKode();
+        $data = $this->produkModel->getKode();
         $noUrut = (int) substr($data["kode"], 3, 3);
         $noUrut++;
-        $char = "MT";
+        $char = "P";
         $data['kode'] = $char . sprintf("%03s", $noUrut);
-        return view('panel/users/index', $data);
+        return view('panel/produk/index', $data);
     }
 }

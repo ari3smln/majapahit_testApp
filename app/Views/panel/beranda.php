@@ -2,8 +2,36 @@
 <?= $this->section('content') ?>
 
 <div class="container-fluid">
-    <h1 class="mt-4">Beranda</h1>
-    <!-- <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p> -->
+    <h4 class="mt-4">Selamat Datang, <?php echo session("nama_lengkap") ?></h4>
+    <div class="row text-center">
+        <div class="col">
+            <div class="counter bg-primary text-light">
+                <i class="fa fa-user fa-2x"></i>
+                <h2 class="timer count-title count-number"><?php echo $userData; ?></h2>
+                <p class="count-text ">Users</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="counter bg-success text-light">
+                <i class="fa fa-archive fa-2x"></i>
+                <h2 class="timer count-title count-number"><?php echo $prodData; ?></h2>
+                <p class="count-text ">Produk</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="counter bg-warning text-light">
+                <i class="fa fa-exchange fa-2x"></i>
+                <h2 class="timer count-title count-number"><?php echo $transData; ?></h2>
+                <p class="count-text ">Transaksi</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="counter bg-info text-light">
+                <i class="fa fa-flag fa-2x"></i>
+                <h2 class="timer count-title count-number"><?php echo $hadData; ?></h2>
+                <p class="count-text ">Hadiah</p>
+            </div>
+        </div>
+    </div>
 </div>
 <?= $this->endSection() ?>

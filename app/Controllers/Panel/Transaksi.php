@@ -4,9 +4,9 @@ namespace App\Controllers\Panel;
 
 use CodeIgniter\Controller;
 use App\Controllers\BaseController;
-use App\Models\UserModel;
+use App\Models\TransaksiModel;
 
-class Users extends BaseController
+class Transaksi extends BaseController
 {
     public function __construct()
     {
@@ -14,15 +14,18 @@ class Users extends BaseController
             session()->setFlashdata('gagalLogin', 'Anda Belum Login !!!');
             return redirect()->to(base_url('login'));
         }
-        $this->userModel = new UserModel();
+        $this->TransaksiModel = new TransaksiModel();
     }
     public function index()
     {
-        $data = $this->userModel->getKode();
+
+        $data = $this->TransaksiModel->getKode();
         $noUrut = (int) substr($data["kode"], 3, 3);
         $noUrut++;
-        $char = "MT";
-        $data['kode'] = $char . sprintf("%03s", $noUrut);
-        return view('panel/users/index', $data);
+
+        $char = "H";
+        $data['kodeHadiah'] = $char . sprintf("%03s", $noUrut);
+
+        return view('panel/transaksi/index', $data);
     }
 }

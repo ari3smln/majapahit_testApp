@@ -6,15 +6,19 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-    protected $table = 'tbl_user';
+    protected $table = 'users';
 
     public function getUser($id = false)
     {
         if ($id === false) {
             return $this->findAll();
         } else {
-            return $this->getWhere(['id' => $id])->getRowArray();
+            return $this->db->table($this->table)->where(['kode_user' => $id])->get()->getRowArray();
         }
+    }
+    public function getKode()
+    {
+        return $this->db->table($this->table)->selectMax('kode_user', 'kode')->get()->getRowArray();
     }
     public function insertUser($data)
     {
@@ -23,11 +27,11 @@ class UserModel extends Model
     public function updateUser($data, $id)
     {
 
-        return $this->db->table($this->table)->update($data, ['id' => $id]);
+        return $this->db->table($this->table)->update($data, ['kode_user' => $id]);
     }
 
     public function deleteUser($id)
     {
-        return $this->db->table($this->table)->delete(['id' => $id]);
+        return $this->db->table($this->table)->delete(['kode_user' => $id]);
     }
 }

@@ -4,50 +4,39 @@ namespace App\Controllers;
 
 use \Firebase\JWT\JWT;
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\UserModel;
+use App\Models\HadiahModel;
 
 
-class Rest extends ResourceController
+class RestHadiah extends ResourceController
 {
     protected $format       = 'json';
-
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->HadiahModel  = new HadiahModel();
     }
-
-    public function users()
+    public function index()
     {
         $data = [
             "status"    => 200,
-            "data"      => $this->userModel->getUser()
+            "data"      => $this->HadiahModel->getHadiah()
         ];
         return $this->respond($data, 200);
     }
-
-    public function userCreate()
+    public function hadiahCreate()
     {
         $validation         =  \Config\Services::validation();
 
-        $nama_user          = $this->request->getPost('nama_user');
-        $username           = $this->request->getPost('username');
-        $level              = $this->request->getPost('level');
-        $password           = $this->request->getPost('password');
-
-        if ($password != null) {
-            $password_hash = password_hash($password, PASSWORD_BCRYPT);
-        } else {
-            $password_hash = $password;
-        }
+        $kode_hadiah            = $this->request->getPost('kode_hadiah');
+        $nama_hadiah            = $this->request->getPost('nama_hadiah');
+        $poin                   = $this->request->getPost('poin');
 
         $data = [
-            'nama_user'         => $nama_user,
-            'username'          => $username,
-            'password'          => $password_hash,
-            'level'             => $level
+            'kode_hadiah'       => $kode_hadiah,
+            'nama_hadiah'       => $nama_hadiah,
+            'poin'              => $poin
         ];
         // return json_encode($validation->run($data, 'user'));
-        if ($validation->run($data, 'user') == FALSE) {
+        if ($validation->run($data, 'hadiah') == FALSE) {
             $code = 500;
             $response = [
                 'status'    => 500,
@@ -56,9 +45,9 @@ class Rest extends ResourceController
             ];
         } else {
             $code = 200;
-            $simpan = $this->userModel->insertUser($data);
+            $simpan = $this->HadiahModel->inserthadiah($data);
             if ($simpan) {
-                $msg = ['message' => 'Created User successfully'];
+                $msg = ['message' => 'Created Hadiah successfully'];
                 $response = [
                     'status'    => $code,
                     'error'     => false,
@@ -68,32 +57,24 @@ class Rest extends ResourceController
         }
         echo json_encode($response, $code);
     }
-    public function userUpdate($id = NULL)
+
+    public function hadiahUpdate($id = NULL)
     {
 
         $validation =  \Config\Services::validation();
 
-        $nama_user          = $this->request->getPost('nama_user');
-        $username           = $this->request->getPost('username');
-        $level              = $this->request->getPost('level');
-        $password           = $this->request->getPost('password');
-
-        if ($password != null || $password != '') {
-            $password_hash = password_hash($password, PASSWORD_BCRYPT);
-        } else {
-            $password_hash = $password;
-        }
+        $kode_hadiah            = $this->request->getPost('kode_hadiah');
+        $nama_hadiah            = $this->request->getPost('nama_hadiah');
+        $poin                   = $this->request->getPost('poin');
 
         $data = [
-            'nama_user' => $nama_user,
-            'username'  => $username,
-            'level'     => $level,
-            'password'  => $password_hash,
+            'nama_hadiah'       => $nama_hadiah,
+            'poin'              => $poin
         ];
 
         // $data   = $this->request->getRawInput();
 
-        if ($validation->run($data, 'user') == FALSE) {
+        if ($validation->run($data, 'hadiah') == FALSE) {
             $code = 500;
             $response = [
                 'status' => $code,
@@ -101,9 +82,9 @@ class Rest extends ResourceController
                 'data' => $validation->getErrors(),
             ];
         } else {
-            $simpan = $this->userModel->updateUser($data, $id);
+            $this->HadiahModel->updateHadiah($data, $kode_hadiah);
             $code = 200;
-            $msg = ['message' => 'Updated User successfully'];
+            $msg = ['message' => 'Updated Hadiah successfully'];
             $response = [
                 'status' => 200,
                 'error' => false,
@@ -115,14 +96,15 @@ class Rest extends ResourceController
         return $this->respond($response, $code);
     }
 
-    public function userDell($id = NULL)
+    public function hadiahDell($id = NULL)
     {
-        $simpan = $this->userModel->getUser($id);
 
-        if ($simpan) {
-            $hapus = $this->userModel->deleteUser($id);
+        $dell = $this->HadiahModel->getHadiah($id);
+        // return var_dump($dell);
+        if ($dell) {
+            $hapus = $this->HadiahModel->deleteHadiah($id);
             $code = 200;
-            $msg = ['message' => 'Deleted User successfully'];
+            $msg = ['message' => 'Deleted Hadiah successfully'];
             $response = [
                 'status' => $code,
                 'error' => false,
